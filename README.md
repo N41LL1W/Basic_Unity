@@ -6,6 +6,7 @@ RPG crafting specs:
 1) Character movement;
 
 2) Leveling System;
+ 2.1) Character class;
 
 3) Skill System;
  3.1) Magic
