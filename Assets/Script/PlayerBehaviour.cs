@@ -11,9 +11,9 @@ public enum TypeCharacter
 
 public class PlayerBehaviour : CharacterBase
 {
-    public TypeCharacter type;
-
-    // Start is called before the first frame update
+    private TypeCharacter type;
+    private AnimationController animamationController;
+    
     protected void Start()
     {
         base.Start();
@@ -23,11 +23,23 @@ public class PlayerBehaviour : CharacterBase
 
         basicStats = PlayerStatsController.Instance.GetBasicStats(type);
 
-    }
+        animamationController = GetComponent<AnimationController>();
 
-    // Update is called once per frame
+    }
+    
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            animamationController.PlayAnimation(AnimationStates.WALK);
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            animamationController.PlayAnimation(AnimationStates.RUN);
+        }
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            animamationController.PlayAnimation(AnimationStates.IDDLE);
+        }
     }
 }
