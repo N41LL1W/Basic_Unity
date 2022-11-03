@@ -11,6 +11,14 @@ public class PlayerStatsController : MonoBehaviour
     public int xpMultiply = 1;
     public float xpFirstLevel = 100;
     public float difficultFactor = 1.5f;
+    public List<BasicInfoChar> baseInfoChars;
+    
+    [System.Serializable]
+    public class BasicInfoChar
+    {
+        public CharacterBase.BasicStats baseInfo;
+        public TypeCharacter typeChar;
+    }
 
     private static float xpNextLevel;
 
@@ -96,7 +104,19 @@ public class PlayerStatsController : MonoBehaviour
     public static void SetTypeCharacter(TypeCharacter newType)
     {
         PlayerPrefs.SetInt("TypeCharacter", (int) newType);
-    } 
+    }
+
+    public CharacterBase.BasicStats GetBasicStats(TypeCharacter type)
+    {
+        foreach (BasicInfoChar info in baseInfoChars)
+        {
+            if (info.typeChar == type)
+            {
+                return info.baseInfo;
+            }
+        }
+        return baseInfoChars[0].baseInfo;
+    }
 
     private void OnGUI()
     {

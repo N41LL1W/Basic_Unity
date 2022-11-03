@@ -20,6 +20,9 @@ public class PlayerBehaviour : CharacterBase
         currentLevel = PlayerStatsController.GetCurrentLevel();
         // PlayerStatsController.SetTypeCharacter(TypeCharacter.Archer);
         type = PlayerStatsController.GetTypeCharacter();
+
+        basicStats = PlayerStatsController.Instance.GetBasicStats(type);
+
     }
 
     // Update is called once per frame

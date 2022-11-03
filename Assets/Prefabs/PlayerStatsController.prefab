@@ -47,3 +47,31 @@ MonoBehaviour:
   xpMultiply: 1
   xpFirstLevel: 100
   difficultFactor: 1.5
+  baseInfoChars:
+  - baseInfo:
+      startLife: 50
+      startMana: 15
+      strength: 30
+      magic: 10
+      agillity: 20
+      baseDefense: 45
+      baseAttack: 35
+    typeChar: 0
+  - baseInfo:
+      startLife: 40
+      startMana: 60
+      strength: 10
+      magic: 35
+      agillity: 15
+      baseDefense: 25
+      baseAttack: 15
+    typeChar: 1
+  - baseInfo:
+      startLife: 45
+      startMana: 25
+      strength: 20
+      magic: 20
+      agillity: 40
+      baseDefense: 35
+      baseAttack: 25
+    typeChar: 2
