@@ -36,7 +36,8 @@ public class PlayerStatsController : MonoBehaviour
             PlayerPrefs.DeleteAll();
         }
     }
-
+    
+    // Função para adicionar XP
     public static void AddXp(float xpAdd)
     {
         float newXp = (GetCurrentXp() + xpAdd) * PlayerStatsController.Instance.xpMultiply;
@@ -47,27 +48,55 @@ public class PlayerStatsController : MonoBehaviour
         }
         PlayerPrefs.SetFloat("currentXp", newXp);
     }
-
+    
+    // Função que guarda o XP Atual
     public static float GetCurrentXp()
     {
         return PlayerPrefs.GetFloat("currentXp");
     }
-
+    
+    // Função que guarda o Level Atual
     public static int GetCurrentLevel()
     {
         return PlayerPrefs.GetInt("currentLevel");
     }
 
+    // Função que adiciona o Level
     public static void AddLevel()
     {
         int newLevel = GetCurrentLevel()+1;
         PlayerPrefs.SetInt("currentLevel", newLevel);
     }
 
+    // Função que pega quanto XP falta para o proximo Level
     public static float GetNextXP()
     {
         return PlayerStatsController.Instance.xpFirstLevel * (GetCurrentLevel() + 1) * PlayerStatsController.Instance.difficultFactor;
     }
+
+    public static TypeCharacter GetTypeCharacter()
+    {
+        int typeId = PlayerPrefs.GetInt("TypeCharacter");
+
+        if (typeId == 0)
+        {
+            return TypeCharacter.Warrior;
+        }
+        else if (typeId == 1)
+        {
+            return TypeCharacter.Wizard;
+        }
+        else if (typeId == 2)
+        {
+            return TypeCharacter.Archer;
+        }
+        return TypeCharacter.Warrior;
+    }
+
+    public static void SetTypeCharacter(TypeCharacter newType)
+    {
+        PlayerPrefs.SetInt("TypeCharacter", (int) newType);
+    } 
 
     private void OnGUI()
     {
