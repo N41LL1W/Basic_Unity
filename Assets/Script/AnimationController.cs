@@ -6,8 +6,7 @@ public enum AnimationStates
 {
     WALK,
     RUN,
-    IDDLE,
-    NONE=4
+    IDDLE
 }
 
 public class AnimationController : MonoBehaviour

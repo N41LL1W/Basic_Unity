@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +10,30 @@ public enum TypeCharacter
     Archer = 2
 }
 
+//[RequireComponent(typeof(CharacterController))]
+//[RequireComponent(typeof(Animator))]
 public class PlayerBehaviour : CharacterBase
 {
     private TypeCharacter type;
-    private AnimationController animamationController;
+    
+    // Animations
+    private CharacterController characterController;
+    private Animator animator;
+    [HideInInspector]
+    public bool canControl = true;
+    
+    // Movimentation
+    public float vertical;
+    public float horizontal;
+    public float running;
+    //public float speed = 3.0F;
+    public float rotateSpeed = 3.0F;
+    public CharacterController controller;
+    public bool groundedPlayer;
+    public Vector3 playerVelocity;
+    public float jumpHeight = 1.0f;
+    public float gravityValue = -9.81f;
+    public float playerSpeed = 2.0f;
     
     protected void Start()
     {
@@ -23,23 +44,68 @@ public class PlayerBehaviour : CharacterBase
 
         basicStats = PlayerStatsController.Instance.GetBasicStats(type);
 
-        animamationController = GetComponent<AnimationController>();
-
+        controller = gameObject.AddComponent<CharacterController>();
+        this.animator = GetComponent<Animator>();
     }
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (!this.canControl)
         {
-            animamationController.PlayAnimation(AnimationStates.WALK);
+            return;
         }
-        else if (Input.GetKeyDown(KeyCode.LeftShift))
+
+        this.vertical = Input.GetAxis("Vertical");
+        this.horizontal = Input.GetAxis("Horizontal");
+        this.Animations();
+        this.Movimention();
+        this.Run();
+    }
+
+    private void Animations()
+    {
+        this.animator.SetFloat("Vertical", vertical);
+        this.animator.SetFloat("Horizontal", horizontal);
+    }
+
+    private void Movimention()
+    {
+        groundedPlayer = controller.isGrounded;
+        if (groundedPlayer && playerVelocity.y < 0)
         {
-            animamationController.PlayAnimation(AnimationStates.RUN);
+            playerVelocity.y = 0f;
         }
-        else if (Input.GetKeyDown(KeyCode.B))
+
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        controller.Move(move * Time.deltaTime * playerSpeed);
+
+        if (move != Vector3.zero)
         {
-            animamationController.PlayAnimation(AnimationStates.IDDLE);
+            gameObject.transform.forward = move;
+        }
+
+        // Changes the height position of the player..
+        if (Input.GetButtonDown("Jump") && groundedPlayer)
+        {
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+        }
+
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
+        
+        // Rotate around y - axis
+        //transform.Rotate(0, Input.GetAxis("Horizontal") * rotateSpeed, 0);
+    }
+
+    public void Run()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            this.animator.SetInteger("Shift", 1);
+        }
+        else
+        {
+            this.animator.SetInteger("Shift", 0);
         }
     }
 }
