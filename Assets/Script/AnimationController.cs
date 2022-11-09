@@ -6,6 +6,7 @@ public enum AnimationStates
 {
     WALK,
     RUN,
+    JUMP,
     IDDLE
 }
 
@@ -35,6 +36,12 @@ public class AnimationController : MonoBehaviour
                 animator.SetBool("inRun", true);
             }
                 break;
+            case AnimationStates.JUMP:
+            {
+                StopAnimations();
+                animator.SetBool("inJump", true);
+            }
+                break;
         }
     }
 
@@ -43,5 +50,6 @@ public class AnimationController : MonoBehaviour
         animator.SetBool("inIddle", false);
         animator.SetBool("inWalk", false);
         animator.SetBool("inRun", false);
+        animator.SetBool("inJump", false);
     }
 }
