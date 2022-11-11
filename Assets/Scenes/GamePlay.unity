@@ -738,14 +738,11 @@ MonoBehaviour:
   playerCamera: {fileID: 545003769}
   mouseSensitivity: 3.5
   walkSpeed: 6
+  runSpeed: 12
   gravity: -13
   moveSmoothTime: 0.3
   mouseSmoothTime: 0.03
   lockCursor: 1
-  canControl: 1
-  vertical: 0
-  horizontal: 0
-  running: 0
 --- !u!143 &1515290257
 CharacterController:
   m_ObjectHideFlags: 0
@@ -770,3 +767,22 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 545599107}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1515290260 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: ae84f41e956739445be40727865ee510,
+    type: 3}
+  m_PrefabInstance: {fileID: 545599107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1515290261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515290250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33c284c2ac5f9b442921dad8cc52efda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1515290260}

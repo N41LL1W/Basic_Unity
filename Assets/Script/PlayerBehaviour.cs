@@ -46,19 +46,12 @@ public class PlayerBehaviour : CharacterBase
     Vector2 currentMouseDelta = Vector2.zero;
     Vector2 currentMouseDeltaVelocity = Vector2.zero;
 
-    
-    
-    private TypeCharacter type;
-    
-    // Animations
-    private CharacterController characterController;
+    //Animations
     private Animator animator;
-    [HideInInspector]
-    public bool canControl = true;
     public float vertical;
     public float horizontal;
-    public float running;
-    public float jumping;
+    
+    private TypeCharacter type;
 
     protected void Start()
     {
@@ -68,9 +61,7 @@ public class PlayerBehaviour : CharacterBase
         type = PlayerStatsController.GetTypeCharacter();
 
         basicStats = PlayerStatsController.Instance.GetBasicStats(type);
-        
-        this.animator = GetComponent<Animator>();
-        
+
         //Movimentation
         controller = GetComponent<CharacterController>();
         if (lockCursor)
@@ -78,34 +69,22 @@ public class PlayerBehaviour : CharacterBase
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+        
+        this .animator = GetComponent<Animator>();
     }
     
     protected void Update()
     {
         base.Update();
-        if (!this.canControl)
-        {
-            return;
-        }
+        Animations();
         this.vertical = Input.GetAxis("Vertical");
         this.horizontal = Input.GetAxis("Horizontal");
-        this.running = Input.GetAxis("Running");
-        this.jumping = Input.GetAxis("Jump");
-        this.Animations();
-        
+
         //Movimentation
         UpdateMouseLook();
         UpdateMovement();
     }
 
-    private void Animations()
-    {
-        this.animator.SetFloat("Vertical", vertical);
-        this.animator.SetFloat("Horizontal", horizontal);
-        this.animator.SetFloat("Running", running);
-        this.animator.SetFloat("Jump", jumping);
-    }
-    
     void UpdateMouseLook() //MOUSE MOVIMENTATION
     {
         Vector2 targetMouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
@@ -137,21 +116,39 @@ public class PlayerBehaviour : CharacterBase
         if (Input.GetButtonUp("Jump") && controller.isGrounded) {
 
             velocityY = Mathf.Sqrt(jumpHeight * -2.0f * gravity);
+            AnimationController.Instance.PlayAnimation(AnimationStates.JUMP); // Animação de Pulo
+            
         };
 
         //Velocity formula
-        if (running == 0)
-        {
-            Vector3 velocity = (transform.forward * currentDir.y + transform.right * currentDir.x) * walkSpeed + Vector3.up * velocityY; 
-
-            controller.Move(velocity * Time.deltaTime);    
-        }
-        else
+        if (Input.GetKey(KeyCode.LeftShift) == true || Input.GetKey(KeyCode.RightShift) == true)
         {
             Vector3 velocity = (transform.forward * currentDir.y + transform.right * currentDir.x) * runSpeed + Vector3.up * velocityY; 
 
+            controller.Move(velocity * Time.deltaTime);
+            AnimationController.Instance.PlayAnimation(AnimationStates.RUN); // Animação de Correr
+        }
+        else
+        {
+            Vector3 velocity = (transform.forward * currentDir.y + transform.right * currentDir.x) * walkSpeed + Vector3.up * velocityY; 
+
             controller.Move(velocity * Time.deltaTime);   
         }
+    }
+    
+    // Animações de Andar e parado
+    void Animations()
+    {
+        this.animator.SetFloat("Vertical", vertical);
+        this.animator.SetFloat("Horizontal", horizontal);
         
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        {
+            AnimationController.Instance.PlayAnimation(AnimationStates.WALK);
+        }
+        else if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        {
+            AnimationController.Instance.PlayAnimation(AnimationStates.IDDLE);
+        }
     }
 }

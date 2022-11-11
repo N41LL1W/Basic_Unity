@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +13,15 @@ public enum AnimationStates
 
 public class AnimationController : MonoBehaviour
 {
-    public Animator animator;
+    public static AnimationController Instance;
     
+    public Animator animator;
+
+    void Start()
+    {
+        Instance = this;
+    }
+
     public void PlayAnimation(AnimationStates stateAnimation)
     {
         switch (stateAnimation)
@@ -39,17 +47,16 @@ public class AnimationController : MonoBehaviour
             case AnimationStates.JUMP:
             {
                 StopAnimations();
-                animator.SetBool("inJump", true);
+                animator.SetTrigger("inJump");
             }
                 break;
         }
     }
 
-    void StopAnimations()
+    public void StopAnimations()
     {
         animator.SetBool("inIddle", false);
         animator.SetBool("inWalk", false);
         animator.SetBool("inRun", false);
-        animator.SetBool("inJump", false);
     }
 }
