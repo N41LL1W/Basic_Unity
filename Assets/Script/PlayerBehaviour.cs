@@ -77,6 +77,7 @@ public class PlayerBehaviour : CharacterBase
     {
         base.Update();
         Animations();
+        Attacks();
         this.vertical = Input.GetAxis("Vertical");
         this.horizontal = Input.GetAxis("Horizontal");
 
@@ -147,6 +148,18 @@ public class PlayerBehaviour : CharacterBase
             AnimationController.Instance.PlayAnimation(AnimationStates.WALK);
         }
         else if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        {
+            AnimationController.Instance.PlayAnimation(AnimationStates.IDDLE);
+        }
+    }
+
+    void Attacks()
+    {
+        if (Input.GetKey(KeyCode.Q) == true)
+        {
+            AnimationController.Instance.PlayAnimation(AnimationStates.ATTACK01);
+        }
+        else
         {
             AnimationController.Instance.PlayAnimation(AnimationStates.IDDLE);
         }
