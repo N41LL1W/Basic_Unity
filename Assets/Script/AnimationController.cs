@@ -9,6 +9,8 @@ public enum AnimationStates
     RUN,
     JUMP,
     ATTACK01,
+    ATTACK02,
+    ATTACK03,
     IDDLE
 }
 
@@ -55,6 +57,18 @@ public class AnimationController : MonoBehaviour
             {
                 StopAnimations();
                 animator.SetTrigger("Attack01");
+            }
+                break;
+            case AnimationStates.ATTACK02:
+            {
+                StopAnimations();
+                animator.SetTrigger("Attack02");
+            }
+                break;
+            case AnimationStates.ATTACK03:
+            {
+                StopAnimations();
+                animator.SetTrigger("Attack03");
             }
                 break;
         }

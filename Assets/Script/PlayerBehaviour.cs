@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum TypeCharacter
 {
@@ -52,6 +53,9 @@ public class PlayerBehaviour : CharacterBase
     public float horizontal;
     
     private TypeCharacter type;
+    
+    //Attacks
+    public int attackType = Random.Range(0, 3);
 
     protected void Start()
     {
@@ -157,11 +161,23 @@ public class PlayerBehaviour : CharacterBase
     {
         if (Input.GetKey(KeyCode.Q) == true)
         {
-            AnimationController.Instance.PlayAnimation(AnimationStates.ATTACK01);
-        }
-        else
-        {
-            AnimationController.Instance.PlayAnimation(AnimationStates.IDDLE);
+            if (attackType == 0)
+            {
+                AnimationController.Instance.PlayAnimation(AnimationStates.ATTACK01);
+            }
+            else if (attackType == 1)
+            {
+                AnimationController.Instance.PlayAnimation(AnimationStates.ATTACK02); 
+            }
+            else if (attackType == 2)
+            {
+                AnimationController.Instance.PlayAnimation(AnimationStates.ATTACK03); 
+            }
+            else
+            {
+                AnimationController.Instance.PlayAnimation(AnimationStates.IDDLE);
+            }
         }
     }
 }
+    
