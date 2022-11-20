@@ -190,6 +190,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerStatsController
       objectReference: {fileID: 0}
+    - target: {fileID: 8796850628592383839, guid: cd3ddb5b92ca8304da7fa064c6b933fd,
+        type: 3}
+      propertyPath: baseInfoChars.Array.data[0].baseInfo.baseRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8796850628592383839, guid: cd3ddb5b92ca8304da7fa064c6b933fd,
+        type: 3}
+      propertyPath: baseInfoChars.Array.data[1].baseInfo.baseRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8796850628592383839, guid: cd3ddb5b92ca8304da7fa064c6b933fd,
+        type: 3}
+      propertyPath: baseInfoChars.Array.data[2].baseInfo.baseRange
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd3ddb5b92ca8304da7fa064c6b933fd, type: 3}
 --- !u!1001 &85281283
@@ -278,6 +293,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sword_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b906e07026404f247b065e0c0a5578d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b906e07026404f247b065e0c0a5578d8, type: 3}
@@ -738,6 +758,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shild_01
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4ede99b08db8dc045ac3556fdaae4ca9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ede99b08db8dc045ac3556fdaae4ca9, type: 3}
 --- !u!1 &726365805
@@ -926,6 +951,7 @@ MonoBehaviour:
     agillity: 0
     baseDefense: 0
     baseAttack: 0
+    baseRange: 0
   playerCamera: {fileID: 545003769}
   mouseSensitivity: 3.5
   walkSpeed: 6
@@ -939,6 +965,8 @@ MonoBehaviour:
   attackType: 0
   sword: {fileID: 0}
   shild: {fileID: 0}
+  attackRate: 0
+  totalAttackAnimations: 0
 --- !u!143 &1515290257
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1014,7 +1042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894ad4c9bcd0e164ca12eafd35663fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLife: 10
+  currentLife: 200
 --- !u!65 &1806473902
 BoxCollider:
   m_ObjectHideFlags: 0

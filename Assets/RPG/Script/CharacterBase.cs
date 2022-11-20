@@ -18,6 +18,7 @@ public abstract class CharacterBase : DestructiveBase
         public int agillity;
         public int baseDefense;
         public int baseAttack;
+        public float baseRange;
     }
     
     // Start is called before the first frame update

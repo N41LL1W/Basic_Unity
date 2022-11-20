@@ -13,6 +13,7 @@ public enum TypeCharacter
 
 public class PlayerBehaviour : CharacterBase
 {
+    [Header("Movimentation")]
     //Movimentation
     //Camera
     [SerializeField] Transform playerCamera = null;
@@ -47,6 +48,7 @@ public class PlayerBehaviour : CharacterBase
     Vector2 currentMouseDelta = Vector2.zero;
     Vector2 currentMouseDeltaVelocity = Vector2.zero;
 
+    [Header("Animations")]
     //Animations
     private Animator animator;
     public float vertical;
@@ -55,14 +57,20 @@ public class PlayerBehaviour : CharacterBase
     private TypeCharacter type;
     
     //Attacks
+    [Header("Attack")]
     [SerializeField]
     private int attackType;
     public GameObject sword;
     public GameObject shild;
+    private int currentAttack = 0;
+    public float attackRate;
+    public int totalAttackAnimations;
+    private float currenteAttackRate;
+    private float rangeAttack;
+    
 
     protected void Start()
     {
-        base.Start();
         currentLevel = PlayerStatsController.GetCurrentLevel();
         // PlayerStatsController.SetTypeCharacter(TypeCharacter.Archer);
         type = PlayerStatsController.GetTypeCharacter();
@@ -78,6 +86,8 @@ public class PlayerBehaviour : CharacterBase
         }
         
         this.animator = GetComponent<Animator>();
+        currentAttack = basicStats.baseAttack;
+        base.Start();
         
     }
     
@@ -169,14 +179,34 @@ public class PlayerBehaviour : CharacterBase
             if (attackType == 0)
             {
                 AnimationController.Instance.PlayAnimation(AnimationStates.ATTACK01);
+                Attack();
             }
             else if (attackType == 1)
             {
                 AnimationController.Instance.PlayAnimation(AnimationStates.ATTACK02);
+                Attack();
             }
             else if (attackType == 2)
             {
                 AnimationController.Instance.PlayAnimation(AnimationStates.ATTACK03);
+                Attack();
+            }
+        }
+    }
+
+    void Attack()
+    {
+        Ray rayAttack = new Ray(transform.position, transform.forward);
+        RaycastHit hitInfo = new RaycastHit();
+        rangeAttack = basicStats.baseRange;
+        if (Physics.Raycast(rayAttack, out hitInfo, rangeAttack)) ;
+        {
+            if (hitInfo.collider.GetComponent<DestructiveBase>() != null)
+            {
+                if (hitInfo.collider != this.GetComponent<Collider>())
+                {
+                    hitInfo.collider.GetComponent<DestructiveBase>().ApplyDamage(currentAttack);
+                }
             }
         }
     }
